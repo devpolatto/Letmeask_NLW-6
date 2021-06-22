@@ -1,12 +1,22 @@
+import { useHistory } from 'react-router-dom';
+
+import Button from '../components/Button';
+
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
 import '../styles/auth.scss';
 
-import Button from '../components/Button';
 
-const pages: React.FC = () => {
+const Home: React.FC = () => {
+
+    const history = useHistory()
+
+    function navigateToNewRoom() {
+        history.push('/rooms/new')
+    }
+
     return (
         <div id="page-auth">
             <aside>
@@ -17,14 +27,16 @@ const pages: React.FC = () => {
             <main>
                 <div className="main-content">
                     <img src={logoImg} alt="Letmeask" />
-                    <button className="create-room">
+                    <button className="create-room" onClick={navigateToNewRoom}>
                         <img src={googleIconImg} alt="" />
                         Crie sua sala com o Google
                     </button>
                     <div className="separator">ou entre em uma sala</div>
                     <form>
                         <input type="text" placeholder={'Digite o código da sala'} />
-                        <Button />
+                        <Button>
+                            Entrar na sala
+                        </Button>
                     </form>
                 </div>
             </main>
@@ -32,4 +44,4 @@ const pages: React.FC = () => {
     );
 }
 
-export default pages;
+export default Home;

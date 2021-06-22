@@ -7,7 +7,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 const Button: React.FC = (props: ButtonProps) => {
     return (
         <button className="button" {...props}>
-            Botao componente
+            {props.children}
         </button>
     );
 }
