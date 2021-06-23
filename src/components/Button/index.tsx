@@ -1,12 +1,12 @@
 import { ButtonHTMLAttributes } from 'react'
 
-import '../../styles/button.scss';
+import './styles.scss'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button: React.FC = (props: ButtonProps) => {
     return (
-        <button className="button" {...props}>
+        <button className="button" color=""  {...props}>
             {props.children}
         </button>
     );
