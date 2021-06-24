@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useAuth } from '../hooks/useAuth';
 
@@ -8,13 +8,16 @@ import Button from '../components/Button';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 
-import '../styles/auth.scss';
 import { database } from 'src/services/firebase';
+
+import '../styles/auth.scss';
 
 const NewRoom: React.FC = () => {
 
     const { user } = useAuth()
     const [newRoom, setNewRoom] = useState('')
+
+    const history = useHistory();
 
     async function handleCreateNewRoom(event: FormEvent) { // create a new room
         event.preventDefault(); // Prevent native html redirects the <farm/> event
@@ -24,12 +27,17 @@ const NewRoom: React.FC = () => {
             return
         }
 
-        const roomRef = database.ref('rooms')
+        const roomRef = database.ref('rooms') // create a reference called "roms" in the BD
 
+        // create a record
         const firebaseRoom = await roomRef.push({
             title: newRoom,
             authorId: user?.id
         })
+
+        //after the room has been created, redirect the user to the new room, 
+        // looking for the key in firebase DB
+        history.push(`/rooms/${firebaseRoom.key}`)
     }
 
     return (
