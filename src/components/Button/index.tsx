@@ -4,11 +4,9 @@ import './styles.scss'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button: React.FC = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     return (
-        <button className="button" color=""  {...props}>
-            {props.children}
-        </button>
+        <button className="button" color="" {...props} />
     );
 }
 
