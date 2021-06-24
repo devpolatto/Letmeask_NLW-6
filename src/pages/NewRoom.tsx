@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { useAuth } from '../hooks/useAuth';
+
 import Button from '../components/Button';
 
 import illustrationImg from '../assets/images/illustration.svg';
@@ -7,8 +9,10 @@ import logoImg from '../assets/images/logo.svg';
 
 import '../styles/auth.scss';
 
-
 const NewRoom: React.FC = () => {
+
+    const { user } = useAuth()
+
     return (
         <div id="page-auth">
             <aside>
@@ -19,6 +23,7 @@ const NewRoom: React.FC = () => {
             <main>
                 <div className="main-content">
                     <img src={logoImg} alt="Letmeask" />
+                    <h1>{user?.name}</h1>
                     <h2>Criar uma nova sala</h2>
                     <form>
                         <input type="text" placeholder={'Nome da sala'} />
