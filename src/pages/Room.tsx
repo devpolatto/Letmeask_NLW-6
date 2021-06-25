@@ -1,7 +1,8 @@
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent } from 'react';
 import { useParams } from 'react-router-dom'
 
 import { useAuth } from 'src/hooks/useAuth';
+import { useRoom } from 'src/hooks/useRoom';
 
 import QUestion from '../components/Question';
 
@@ -12,26 +13,6 @@ import { database } from 'src/services/firebase';
 
 import '../styles/room.scss';
 
-type FirebaseQuestions = Record<string, {
-    author: {
-        name: string;
-        avatar: string;
-    }
-    content: string;
-    isAnswered: boolean;
-    sHighLighted: boolean;
-}>
-
-type Question = {
-    id: string;
-    author: {
-        name: string;
-        avatar: string;
-    }
-    content: string;
-    isAnswered: boolean;
-    isHighLighted: boolean;
-}
 
 type RoomParams = {
     id: string;
@@ -41,40 +22,11 @@ const Room: React.FC = () => {
 
     // allows getting the parameters passed in the URL
     const params = useParams<RoomParams>();
+    const roomId = params.id;
     const [newQuestion, setNewQuestion] = useState('')
-    const [questions, setQuestions] = useState<Question[]>([])
-    const [title, setTitle] = useState('')
+    const { questions, title } = useRoom(roomId)
 
     const { user } = useAuth();
-
-    const roomId = params.id;
-
-    // Search all questions in the room
-    useEffect(() => {
-        const roomRef = database.ref(`rooms/${roomId}`);
-
-        roomRef.on('value', room => {
-            const databaseRoom = room.val();
-            const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-
-            const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-                return {
-                    id: key,
-                    author: value.author,
-                    content: value.content,
-                    isAnswered: value.isAnswered,
-                    isHighLighted: value.sHighLighted
-                }
-            })
-
-            console.log(parsedQuestions)
-
-            setTitle(databaseRoom.title)
-            setQuestions(parsedQuestions)
-        })
-
-        console.log(roomId)
-    }, [roomId])
 
     async function handleSendQuestion(event: FormEvent) {
         event.preventDefault();
@@ -104,9 +56,7 @@ const Room: React.FC = () => {
 
     return (
         <div id="page-room">
-
             <Header />
-
             <main>
                 <div className="room-title">
                     <h1>Sala {title}</h1>
