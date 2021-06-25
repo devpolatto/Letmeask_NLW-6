@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 
 import { useAuth } from 'src/hooks/useAuth';
 
+import QUestion from '../components/Question';
+
 import Header from '../components/Header';
 import Button from 'src/components/Button';
 
@@ -133,7 +135,17 @@ const Room: React.FC = () => {
                     </div>
                 </form>
 
-                {JSON.stringify(questions)}
+                {
+                    questions.map(question => {
+                        return (
+                            <QUestion
+                                key={question.id}
+                                content={question.content}
+                                author={question.author}
+                            />
+                        )
+                    })
+                }
 
             </main>
 
