@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAuth } from 'src/hooks/useAuth';
 import { useRoom } from 'src/hooks/useRoom';
 
-import QUestion from '../components/Question';
+import Question from '../components/Question';
 
 import Header from '../components/Header';
 import Button from 'src/components/Button';
@@ -88,7 +88,7 @@ const Room: React.FC = () => {
                 {
                     questions.map(question => {
                         return (
-                            <QUestion
+                            <Question
                                 key={question.id}
                                 content={question.content}
                                 author={question.author}
