@@ -12,5 +12,14 @@ header{
         > img{
             max-height: 45 ;
         }
+
+        > div{
+            display: flex;
+            gap: 16px;
+        }
+
+        button{
+            height: 40px;
+        }
     }
 }

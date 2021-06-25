@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { useParams } from 'react-router-dom'
 
 import RoomCode from '../RoomCode';
@@ -6,11 +7,15 @@ import './styles.scss';
 
 import logoImg from '../../assets/images/logo.svg';
 
+type HeaderProps = {
+    children?: ReactNode;
+}
+
 type RoomParams = {
     id: string;
 }
 
-const Header: React.FC = () => {
+const Header: React.FC = (props: HeaderProps) => {
 
     // allows getting the parameters passed in the URL
     const params = useParams<RoomParams>();
@@ -19,7 +24,10 @@ const Header: React.FC = () => {
         <header>
             <div className="content">
                 <img src={logoImg} alt="Letmask" />
-                <RoomCode code={params.id} />
+                <div>
+                    <RoomCode code={params.id} />
+                    {props.children}
+                </div>
             </div>
         </header>
     );
