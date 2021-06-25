@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 // import { useAuth } from 'src/hooks/useAuth';
 import { useRoom } from 'src/hooks/useRoom';
@@ -24,8 +24,19 @@ const AdminRoom: React.FC = () => {
     const params = useParams<RoomParams>();
     const roomId = params.id;
     const { questions, title } = useRoom(roomId)
+    const hisroty = useHistory();
 
     // const { user } = useAuth();
+
+    async function handleEndRoom(roomId: string) {
+
+        console.log(roomId)
+        await database.ref(`rooms/${roomId}`).update({
+            endedAt: new Date()
+        })
+
+        hisroty.push('/')
+    }
 
     async function handleDeleteQuestion(questionId: string) {
         if (window.confirm('Você têm certeza que deseja excluir esta pergunta?')) {
@@ -36,7 +47,7 @@ const AdminRoom: React.FC = () => {
     return (
         <div id="page-room">
             <Header>
-                <Button isOutlined>
+                <Button isOutlined onClick={() => handleEndRoom(roomId)}>
                     Encerrar sala
                 </Button>
             </Header>
