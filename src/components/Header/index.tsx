@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import RoomCode from '../RoomCode';
 
-import './styles.scss';
+import { Container, Content, Tools } from './styles';
 
 import logoImg from '../../assets/images/logo.svg';
 
@@ -21,15 +21,15 @@ const Header: React.FC = (props: HeaderProps) => {
     const params = useParams<RoomParams>();
 
     return (
-        <header>
-            <div className="content">
+        <Container>
+            <Content className="content">
                 <img src={logoImg} alt="Letmask" />
-                <div>
+                <Tools>
                     <RoomCode code={params.id} />
                     {props.children}
-                </div>
-            </div>
-        </header>
+                </Tools>
+            </Content>
+        </Container>
     );
 }
 
